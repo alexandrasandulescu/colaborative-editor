@@ -1,0 +1,15 @@
+cu socketi
+
+dar tre sa ai listener de server
+
+de connecturi
+
+sa faci accept
+
+trebuie sa ai main thread pt UI
+
+alt thread care iti scrie in UI
+
+cand primesti de la CBCAST
+
+alt thread cu CBCAST-ul
