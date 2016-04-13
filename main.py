@@ -8,6 +8,5 @@ def main():
             args = [q])
     ui_thread.start()
 
-
 if __name__ == "__main__":
     main()
