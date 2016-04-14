@@ -9,9 +9,10 @@ alpha_numeric = string.printable
 alpha_numeric_ord = [ord(x) for x in alpha_numeric]
 
 class CustomEdit(QtGui.QTextEdit):
-    def __init__(self, queue, parent=None):
+    def __init__(self, queue, update_q, parent=None):
         super(QtGui.QTextEdit, self).__init__(parent)
         self.queue = queue
+        self.update_q = update_q
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Backspace:

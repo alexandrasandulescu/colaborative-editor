@@ -1,6 +1,16 @@
 from Node import Node
 import threading
 
+class Message():
+    #del = 0
+    #insert = 1
+    def __init__(self, _type, pos, char):
+        self._type = _type
+        self.pos = pos
+        if self._type == 1:
+            self.char = char
+        self.vt = []
+
 class CBCAST():
     def __init__(self, queue, node, ui):
         self.queue = queue
@@ -34,6 +44,9 @@ class CBCAST():
                 self.queue.put(message)
 
     def deliver(self, msg):
+        #update vt in msg
+        if msg._type == 0:
+            gui.
         pass
 
 

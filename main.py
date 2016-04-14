@@ -16,11 +16,12 @@ def main():
 
 
     q = queue.Queue(maxsize=100)
+    update_q = queue.Queue(maxsize=100)
     ui_thread = threading.Thread(target = start_ui,
-            args = [q])
+            args = [q, update_q])
     ui_thread.start()
 
-    cm = CommunicationModule(q, _id)
+    cm = CommunicationModule(q, update_q, _id)
     cm.run()
 
 if __name__ == "__main__":
