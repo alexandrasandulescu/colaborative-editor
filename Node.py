@@ -1,6 +1,7 @@
 import socket
+import traceback
 
-class Node(port):
+class Node():
     def __init__(self, port):
         self.shutdown = False
         self.socket = socket.socket(socket.AF_INET,
@@ -8,8 +9,7 @@ class Node(port):
         self.socket.setsockopt(socket.SOL_SOCKET,
                 socket.SO_REUSEADDR, 1)
         self.socket.bind(('', port))
-        self.listen(2)
-        self.clients = []
+        self.socket.listen(2)
 
     def __debug(self, msg):
         print('[DEBUG]' + msg)
@@ -23,23 +23,23 @@ class Node(port):
         # update pq
         self.__debug(clientsock.recv(100))
 
-    def __handlesend(self, clientsock):
-        pass
+    #def __handlesend(self, clientsock):
+    #    pass
 
-    def connectandsend(self, clientsock, msg):
-        self.sendsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sendsock.connect(clientsock.getpeername())
-        sd = self.sendsock.makefile('rw', 0)
-        sd.write(msg)
-        sd.flush()
-        self.sendsock.close()
-        sd = None
+    #def connectandsend(self, clientsock, msg):
+    #    self.sendsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #    self.sendsock.connect(clientsock.getpeername())
+    #    sd = self.sendsock.makefile('rw', 0)
+    #    sd.write(msg)
+    #    sd.flush()
+    #    self.sendsock.close()
+    #    sd = None
 
     def mainloop(self):
         while not self.shutdown:
             try:
                 self.__debug( 'Listening for connections...' )
-                clientsock, clientaddr = s.accept()
+                clientsock, clientaddr = self.socket.accept()
                 clientsock.settimeout(None)
 
                 #start listening thread
@@ -47,18 +47,13 @@ class Node(port):
                                       args = [ clientsock ] )
                 t.start()
 
-                r = threading.Thread(target = self.__handlesend,
-                        args = [clientsock])
-                r.start()
-
             except KeyboardInterrupt:
                 print('KeyboardInterrupt: stopping mainloop')
                 self.shutdown = True
                 continue
             except:
-                if self.debug:
-                    traceback.print_exc()
-                    continue
+                traceback.print_exc()
+                continue
 
         # end while loop
         self.__debug( 'Main loop exiting' )
